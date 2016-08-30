@@ -1,0 +1,15 @@
+FROM ubuntu:14.04
+MAINTAINER Binh Nguyen
+
+RUN apt-get update -y && apt-get install -y \
+	wget
+RUN mkdir -p /home/ubuntu/app
+RUN mkdir /home/ubuntu/reports
+RUN wget https://github.com/Arachni/arachni/releases/download/v1.4/arachni-1.4-0.5.10-linux-x86_64.tar.gz -P /tmp/arachni/
+RUN cd /tmp/arachni/ && tar -xzf arachni-1.4-0.5.10-linux-x86_64.tar.gz -C /home/ubuntu/app && rm -f arachni-1.4-0.5.10-linux-x86_64.tar.gz
+
+EXPOSE 9292
+
+WORKDIR /home/ubuntu/app/arachni-1.4-0.5.10
+
+ENTRYPOINT ["./bin/arachni"]
